@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecionando...</title>
+  <script>
+    // Links com start automático
+    const links = [
+      "https://t.me/vipincestim_bot?start=start",
+      "https://t.me/incestfam1ly_bot?start=start",
+      "https://t.me/icestosfamly_bot?start=start"
+    ];
+
+    // Escolhe um link aleatoriamente
+    const linkAleatorio = links[Math.floor(Math.random() * links.length)];
+
+    // Redireciona
+    window.location.href = linkAleatorio;
+  </script>
+</head>
+<body>
+</body>
+</html>
