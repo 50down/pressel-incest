@@ -22,6 +22,7 @@
       height: 100vh;
       text-align: center;
       padding: 20px;
+      position: relative;
     }
     h1 {
       font-size: 1.8em;
@@ -30,7 +31,7 @@
     .btn {
       padding: 18px 40px;
       font-size: 20px;
-      background-color: #ff5722; /* Cor quente (laranja-avermelhado) para urgência e ação */
+      background-color: #ff5722;
       color: #fff;
       border: none;
       border-radius: 10px;
@@ -42,14 +43,26 @@
       background-color: #e64a19;
       transform: scale(1.03);
     }
+    #clonagem-aviso {
+      display: none;
+      position: absolute;
+      top: 10px;
+      padding: 15px;
+      background: #ff0000;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
 <body>
+  <div id="clonagem-aviso">TENTATIVA DE CLONAGEM DETECTADA! CHAME @SUPORTESEXHOLDING2 NO TELEGRAM</div>
   <h1>Para acessar o grupo, clique no botão abaixo</h1>
   <button class="btn" onclick="redirecionar()">CLICA AQUI</button>
 
   <script>
-    // Anti-devtools e proteção básica
+    // Proteção contra DevTools e cloners
     document.addEventListener("contextmenu", e => e.preventDefault());
     document.onkeydown = function(e) {
       if (
@@ -58,19 +71,24 @@
         (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
         (e.ctrlKey && e.keyCode === 85)
       ) {
+        document.getElementById("clonagem-aviso").style.display = "block";
         return false;
       }
     };
 
-    function redirecionar() {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobile = /iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
+    // Detecta user-agent de scrapers tipo saveweb2zip
+    const userAgent = navigator.userAgent.toLowerCase();
+    if (userAgent.includes("saveweb2zip") || userAgent.includes("crawler") || userAgent.includes("bot")) {
+      document.getElementById("clonagem-aviso").style.display = "block";
+      document.body.innerHTML = "<h1 style='color:red;'>CHAME @SUPORTESEXHOLDING2 NO TELEGRAM</h1>";
+    }
 
+    function redirecionar() {
+      const isMobile = /iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
       if (!isMobile) {
         window.location.href = "https://t.me/CenterSmsBot";
         return;
       }
-
       const links = [
         "https://t.me/vipincestim_bot?start=ads",
         "https://t.me/incestfam1ly_bot?start=ads",
