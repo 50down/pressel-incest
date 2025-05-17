@@ -1,70 +1,76 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Central de Atendimento</title>
+  <title>Acesso ao Grupo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
     body {
       background-color: #ffffff;
+      color: #000;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 15px;
     }
     .btn {
-      padding: 20px 30px;
-      font-size: 18px;
-      background-color: #007bff;
+      padding: 18px 40px;
+      font-size: 20px;
+      background-color: #ff5722; /* Cor quente (laranja-avermelhado) para urgência e ação */
       color: #fff;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.1s ease;
     }
     .btn:hover {
-      background-color: #0056b3;
+      background-color: #e64a19;
+      transform: scale(1.03);
     }
   </style>
 </head>
 <body>
-  <button class="btn" onclick="redirecionar()">Falar com Atendente</button>
+  <h1>Para acessar o grupo, clique no botão abaixo</h1>
+  <button class="btn" onclick="redirecionar()">CLICA AQUI</button>
 
   <script>
-    // Proteção anti-devtools (F12, Ctrl+Shift+I, clique direito, etc)
+    // Anti-devtools e proteção básica
     document.addEventListener("contextmenu", e => e.preventDefault());
     document.onkeydown = function(e) {
       if (
-        e.keyCode === 123 || // F12
-        (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
-        (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
-        (e.ctrlKey && e.keyCode === 85) // Ctrl+U
+        e.keyCode === 123 ||
+        (e.ctrlKey && e.shiftKey && e.keyCode === 73) ||
+        (e.ctrlKey && e.shiftKey && e.keyCode === 74) ||
+        (e.ctrlKey && e.keyCode === 85)
       ) {
         return false;
       }
     };
 
-    // Detecta bots e dispositivos desktop
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isBot = userAgent.includes("facebookexternalhit") ||
-                  userAgent.includes("facebot") ||
-                  userAgent.includes("twitterbot") ||
-                  userAgent.includes("linkedinbot") ||
-                  userAgent.includes("embedly") ||
-                  userAgent.includes("slackbot") ||
-                  userAgent.includes("telegrambot") ||
-                  userAgent.includes("whatsapp") ||
-                  userAgent.includes("discordbot");
-    
-    const isMobile = /iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
-
-    if (isBot || !isMobile) {
-      window.location.href = "https://t.me/CenterSmsBot";
-    }
-
     function redirecionar() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobile = /iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(userAgent);
+
+      if (!isMobile) {
+        window.location.href = "https://t.me/CenterSmsBot";
+        return;
+      }
+
       const links = [
         "https://t.me/vipincestim_bot?start=ads",
         "https://t.me/incestfam1ly_bot?start=ads",
