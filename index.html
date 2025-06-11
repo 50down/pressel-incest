@@ -4,28 +4,60 @@
   <meta charset="UTF-8">
   <title>Redirecionando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
 
-  <!-- Facebook Pixel Code -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1125395379392398');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-         src="https://www.facebook.com/tr?id=1125395379392398&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Facebook Pixel Code -->
+    .telegram-logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .loading-text {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .progress-bar {
+      width: 200px;
+      height: 8px;
+      background-color: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0;
+      height: 100%;
+      background-color: #0088cc;
+      animation: loading 1s linear forwards;
+    }
+
+    @keyframes loading {
+      to {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img class="telegram-logo" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo">
+  <div class="loading-text">Redirecionando...</div>
+  <div class="progress-bar">
+    <div class="progress"></div>
+  </div>
 
   <script>
-    // Redirecionamento aleatório
     const links = [
       "https://t.me/+4FIM0bOL4yI5ZWU9",
       "https://t.me/+4FIM0bOL4yI5ZWU9",
@@ -34,9 +66,11 @@
       "https://t.me/+4FIM0bOL4yI5ZWU9"
     ];
     const linkAleatorio = links[Math.floor(Math.random() * links.length)];
-    window.location.href = linkAleatorio;
+
+    // Aguarda o tempo da animação antes de redirecionar
+    setTimeout(() => {
+      location.replace(linkAleatorio);
+    }, 1000); // 1 segundo
   </script>
-</head>
-<body>
 </body>
 </html>
