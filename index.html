@@ -40,7 +40,8 @@
       width: 0;
       height: 100%;
       background-color: #0088cc;
-      animation: loading 1s linear forwards;
+      /* Animação com a mesma duração do script para consistência visual */
+      animation: loading 0.15s linear forwards;
     }
 
     @keyframes loading {
@@ -51,26 +52,27 @@
   </style>
 </head>
 <body>
-  <img class="telegram-logo" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram Logo">
+  
+  <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="120" cy="120" r="120" fill="#0088CC"/>
+    <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
+    <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
+    <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
+  </svg>
+  
   <div class="loading-text">Redirecionando...</div>
   <div class="progress-bar">
     <div class="progress"></div>
   </div>
 
   <script>
-    const links = [
-      "https://t.me/+4FIM0bOL4yI5ZWU9",
-      "https://t.me/+4FIM0bOL4yI5ZWU9",
-      "https://t.me/+4FIM0bOL4yI5ZWU9",
-      "https://t.me/+4FIM0bOL4yI5ZWU9",
-      "https://t.me/+4FIM0bOL4yI5ZWU9"
-    ];
-    const linkAleatorio = links[Math.floor(Math.random() * links.length)];
+    // Link de destino único
+    const linkDestino = "https://t.me/+4FIM0bOL4yI5ZWU9";
 
-    // Aguarda o tempo da animação antes de redirecionar
+    // Aguarda um tempo mínimo (0.15s) antes de redirecionar
     setTimeout(() => {
-      location.replace(linkAleatorio);
-    }, 1000); // 1 segundo
+      location.replace(linkDestino);
+    }, 150);
   </script>
 </body>
 </html>
