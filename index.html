@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecionando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .telegram-logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    .loading-text {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #444;
+    }
+
+    .progress-bar {
+      width: 200px;
+      height: 8px;
+      background-color: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress {
+      width: 0;
+      height: 100%;
+      background-color: #0088cc;
+      animation: loading 0.15s linear forwards;
+    }
+
+    @keyframes loading {
+      to {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="120" cy="120" r="120" fill="#0088CC"/>
+    <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
+    <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
+    <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
+  </svg>
+  
+  <div class="loading-text">Redirecionando...</div>
+  <div class="progress-bar">
+    <div class="progress"></div>
+  </div>
+
+  <script>
+    // Lista de links
+    const links = [
+      "https://t.me/teenpayments_bot",
+      "https://t.me/incetspaymentes_bot",
+      "https://t.me/incesteenpayments_bot",
+      "https://t.me/incesteenpayments01_bot",
+      "https://t.me/teenpay02ments_bot",
+      "https://t.me/teenpay03ments_bot",
+      "https://t.me/teenpay04ments_bot",
+      "https://t.me/incesteenpayments05_bot",
+      "https://t.me/incesteenpayments0_bot"
+    ];
+
+    // Verifica se já existe um link salvo no navegador
+    let linkDestino = localStorage.getItem("linkEscolhido");
+
+    // Se não existir, escolhe um aleatório e salva
+    if (!linkDestino) {
+      linkDestino = links[Math.floor(Math.random() * links.length)];
+      localStorage.setItem("linkEscolhido", linkDestino);
+    }
+
+    // Redireciona após 0.15s
+    setTimeout(() => {
+      location.replace(linkDestino);
+    }, 150);
+  </script>
+</body>
+</html>
