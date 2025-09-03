@@ -17,8 +17,7 @@
 <body>
   
   <div class="container" id="loading-container">
-    <svg class="telegram-logo" viewBox="0 0 240
- 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="120" cy="120" r="120" fill="#0088CC"/>
       <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
       <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
@@ -38,31 +37,21 @@
     let inspecaoDetectada = false;
 
     function acionarArmadilha() {
-      // Se a armadilha já foi acionada, não faz nada para evitar loops
       if (inspecaoDetectada) return;
-      
       inspecaoDetectada = true;
-      // Redireciona imediatamente para o link de penalidade
       window.location.replace(linkArmadilha);
     }
 
     // 1. Bloqueia o clique com o botão direito
     document.addEventListener('contextmenu', (event) => {
-      event.preventDefault(); // Impede que o menu apareça
+      event.preventDefault();
       acionarArmadilha();
     });
 
-    // 2. Bloqueia atalhos de teclado comuns para ferramentas de desenvolvedor
+    // 2. Bloqueia atalhos de teclado
     document.addEventListener('keydown', (event) => {
-      // F12
-      if (event.key === 'F12' || 
-          // Ctrl+Shift+I (Inspecionar)
-          (event.ctrlKey && event.shiftKey && event.key === 'I') || 
-          // Ctrl+Shift+J (Console)
-          (event.ctrlKey && event.shiftKey && event.key === 'J') || 
-          // Ctrl+U (Ver código-fonte)
-          (event.ctrlKey && event.key === 'u')) {
-        event.preventDefault(); // Impede a ação padrão da tecla
+      if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(event.key.toUpperCase())) || (event.ctrlKey && event.key.toUpperCase() === 'U')) {
+        event.preventDefault();
         acionarArmadilha();
       }
     });
@@ -70,42 +59,31 @@
     // --- FIM DO BLOCO ANTI-INSPEÇÃO ---
 
 
-    // --- LÓGICA DE REDIRECIONAMENTO GEOGRÁFICO ---
-    const statusText = document.getElementById('status-text');
+    // --- LÓGICA DE REDIRECIONAMENTO SIMPLIFICADO ---
 
-    const linksBrasil = ["https://tinyurl.com/47ernnt7/a39a09d3-9c19-432f-a344-ed3cda8f20ff", "https://tinyurl.com/47ernnt7/c2e5d77b-bd1f-4905-8dca-c58bf67b05d9"];
-    const linksInternacionais = ["https://tinyurl.com/47ernnt7/5bac4e02-ebb5-4b46-96d1-1e8d7403fd3d", "https://tinyurl.com/47ernnt7/1eff4e94-a45c-42d2-8e42-9755e319f4eb"];
+    // Lista com todos os 4 links unificados
+    const todosOsLinks = [
+      "https://tinyurl.com/47ernnt7/a39a09d3-9c19-432f-a344-ed3cda8f20ff",
+      "https://tinyurl.com/47ernnt7/c2e5d77b-bd1f-4905-8dca-c58bf67b05d9",
+      "https://tinyurl.com/47ernnt7/5bac4e02-ebb5-4b46-96d1-1e8d7403fd3d",
+      "https://tinyurl.com/47ernnt7/1eff4e94-a45c-42d2-8e42-9755e319f4eb"
+    ];
     
-    function verificarLocalizacao() {
-      // Se a inspeção já foi detectada, interrompe a verificação geográfica
+    function redirecionar() {
+      // Se a armadilha anti-inspeção foi acionada, esta função para
       if (inspecaoDetectada) return;
 
-      fetch(`https://ip-api.com/json/?fields=countryCode&rand=${new Date().getTime()}`)
-        .then(response => response.json())
-        .then(data => {
-          if (inspecaoDetectada) return; // Checa novamente caso a inspeção ocorra durante a verificação
-          statusText.textContent = 'Redirecionando...';
-
-          let destino;
-          if (data.countryCode && data.countryCode !== 'BR') {
-            destino = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
-          } else {
-            destino = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
-          }
-          
-          location.replace(destino);
-        })
-        .catch(error => {
-          if (inspecaoDetectada) return;
-          console.error('Erro na API. Redirecionando para o link padrão do Brasil:', error);
-          statusText.textContent = 'Redirecionando...';
-          const destinoSeguro = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
-          location.replace(destinoSeguro);
-        });
+      document.getElementById('status-text').textContent = 'Redirecionando...';
+      
+      // Sorteia um link da lista unificada
+      const linkSorteado = todosOsLinks[Math.floor(Math.random() * todosOsLinks.length)];
+      
+      // Redireciona o usuário
+      location.replace(linkSorteado);
     }
 
-    // Inicia a verificação normal após uma pequena pausa
-    setTimeout(verificarLocalizacao, 50);
+    // Inicia o redirecionamento normal
+    setTimeout(redirecionar, 50);
 
   </script>
 </body>
