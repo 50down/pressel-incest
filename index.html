@@ -5,63 +5,20 @@
   <title>Redirecionando...</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .telegram-logo {
-      width: 80px;
-      margin-bottom: 20px;
-    }
-
-    .status-text {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #444;
-      min-height: 1.5em;
-    }
-
-    .progress-bar {
-      width: 200px;
-      height: 8px;
-      background-color: #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .progress {
-      width: 0;
-      height: 100%;
-      background-color: #0088cc;
-      animation: loading 1.5s linear forwards;
-    }
-
-    @keyframes loading {
-      to {
-        width: 100%;
-      }
-    }
+    body { margin: 0; padding: 0; background-color: #f9f9f9; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; text-align: center; }
+    .container { display: flex; flex-direction: column; align-items: center; }
+    .telegram-logo { width: 80px; margin-bottom: 20px; }
+    .status-text { font-size: 1.2rem; margin-bottom: 10px; color: #444; min-height: 1.5em; }
+    .progress-bar { width: 200px; height: 8px; background-color: #ddd; border-radius: 5px; overflow: hidden; }
+    .progress { width: 0; height: 100%; background-color: #0088cc; animation: loading 1.5s linear forwards; }
+    @keyframes loading { to { width: 100%; } }
   </style>
 </head>
 <body>
   
   <div class="container" id="loading-container">
-    <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="telegram-logo" viewBox="0 0 240
+ 240" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="120" cy="120" r="120" fill="#0088CC"/>
       <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
       <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
@@ -75,52 +32,81 @@
   </div>
 
   <script>
+    // --- INÍCIO DO BLOCO ANTI-INSPEÇÃO ---
+
+    const linkArmadilha = "https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
+    let inspecaoDetectada = false;
+
+    function acionarArmadilha() {
+      // Se a armadilha já foi acionada, não faz nada para evitar loops
+      if (inspecaoDetectada) return;
+      
+      inspecaoDetectada = true;
+      // Redireciona imediatamente para o link de penalidade
+      window.location.replace(linkArmadilha);
+    }
+
+    // 1. Bloqueia o clique com o botão direito
+    document.addEventListener('contextmenu', (event) => {
+      event.preventDefault(); // Impede que o menu apareça
+      acionarArmadilha();
+    });
+
+    // 2. Bloqueia atalhos de teclado comuns para ferramentas de desenvolvedor
+    document.addEventListener('keydown', (event) => {
+      // F12
+      if (event.key === 'F12' || 
+          // Ctrl+Shift+I (Inspecionar)
+          (event.ctrlKey && event.shiftKey && event.key === 'I') || 
+          // Ctrl+Shift+J (Console)
+          (event.ctrlKey && event.shiftKey && event.key === 'J') || 
+          // Ctrl+U (Ver código-fonte)
+          (event.ctrlKey && event.key === 'u')) {
+        event.preventDefault(); // Impede a ação padrão da tecla
+        acionarArmadilha();
+      }
+    });
+    
+    // --- FIM DO BLOCO ANTI-INSPEÇÃO ---
+
+
+    // --- LÓGICA DE REDIRECIONAMENTO GEOGRÁFICO ---
     const statusText = document.getElementById('status-text');
 
-    // --- SEUS NOVOS LINKS ---
-
-    // 2 Links para quem está NO Brasil
-    const linksBrasil = [
-      "https://tinyurl.com/47ernnt7/a39a09d3-9c19-432f-a344-ed3cda8f20ff",
-      "https://tinyurl.com/47ernnt7/c2e5d77b-bd1f-4905-8dca-c58bf67b05d9"
-    ];
-
-    // 2 Links para quem está FORA do Brasil ("gringos")
-    const linksInternacionais = [
-      "https://tinyurl.com/47ernnt7/5bac4e02-ebb5-4b46-96d1-1e8d7403fd3d",
-      "https://tinyurl.com/47ernnt7/1eff4e94-a45c-42d2-8e42-9755e319f4eb"
-    ];
+    const linksBrasil = ["https://tinyurl.com/47ernnt7/a39a09d3-9c19-432f-a344-ed3cda8f20ff", "https://tinyurl.com/47ernnt7/c2e5d77b-bd1f-4905-8dca-c58bf67b05d9"];
+    const linksInternacionais = ["https://tinyurl.com/47ernnt7/5bac4e02-ebb5-4b46-96d1-1e8d7403fd3d", "https://tinyurl.com/47ernnt7/1eff4e94-a45c-42d2-8e42-9755e319f4eb"];
     
     function verificarLocalizacao() {
-      // Adiciona um parâmetro aleatório para evitar o cache do navegador
+      // Se a inspeção já foi detectada, interrompe a verificação geográfica
+      if (inspecaoDetectada) return;
+
       fetch(`https://ip-api.com/json/?fields=countryCode&rand=${new Date().getTime()}`)
         .then(response => response.json())
         .then(data => {
+          if (inspecaoDetectada) return; // Checa novamente caso a inspeção ocorra durante a verificação
           statusText.textContent = 'Redirecionando...';
 
           let destino;
-
-          // Se a API confirmar que o país NÃO é o Brasil...
           if (data.countryCode && data.countryCode !== 'BR') {
-            // ...sorteia um link da lista internacional.
             destino = linksInternacionais[Math.floor(Math.random() * linksInternacionais.length)];
           } else {
-            // ...senão (se for BR ou se a API falhar), sorteia um link da lista do Brasil.
             destino = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
           }
           
           location.replace(destino);
         })
         .catch(error => {
+          if (inspecaoDetectada) return;
           console.error('Erro na API. Redirecionando para o link padrão do Brasil:', error);
           statusText.textContent = 'Redirecionando...';
-          // Em caso de erro, por segurança, sorteia um link do Brasil
           const destinoSeguro = linksBrasil[Math.floor(Math.random() * linksBrasil.length)];
           location.replace(destinoSeguro);
         });
     }
 
-    verificarLocalizacao();
+    // Inicia a verificação normal após uma pequena pausa
+    setTimeout(verificarLocalizacao, 50);
+
   </script>
 </body>
 </html>
