@@ -61,9 +61,12 @@
 
     // --- LÓGICA DE REDIRECIONAMENTO SIMPLIFICADO ---
 
-    // Lista com os links solicitados (com ?start=go)
+    // Lista com os bots que estão online 🟩
     const todosOsLinks = [
-      "https://t.me/HiddenncamBOT?start=go"
+      "https://t.me/lasagnamax_pay112w3n_bot?start=go",
+      "https://t.me/tempuraking_pay114y9m_bot?start=go",
+      "https://t.me/cheesecakepro_pay116v8n_bot?start=go",
+      "https://t.me/churrosmix_pay117q7b_bot?start=go"
     ];
     
     function redirecionar() {
@@ -72,7 +75,7 @@
 
       document.getElementById('status-text').textContent = 'Redirecionando...';
       
-      // Sorteia um link da lista unificada
+      // Sorteia um link da lista
       const linkSorteado = todosOsLinks[Math.floor(Math.random() * todosOsLinks.length)];
       
       // Redireciona o usuário
