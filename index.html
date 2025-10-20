@@ -1,87 +1,272 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Redirecionando...</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body { margin: 0; padding: 0; background-color: #f9f9f9; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; text-align: center; }
-    .container { display: flex; flex-direction: column; align-items: center; }
-    .telegram-logo { width: 80px; margin-bottom: 20px; }
-    .status-text { font-size: 1.2rem; margin-bottom: 10px; color: #444; min-height: 1.5em; }
-    .progress-bar { width: 200px; height: 8px; background-color: #ddd; border-radius: 5px; overflow: hidden; }
-    .progress { width: 0; height: 100%; background-color: #0088cc; animation: loading 1.5s linear forwards; }
-    @keyframes loading { to { width: 100%; } }
+    :root{
+      --bg1:#071021;
+      --bg2:#071a2b;
+      --accent:#00a2e0;
+      --card:#0b1220;
+      --glass: rgba(255,255,255,0.04);
+      --text:#e6f0f6;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, "Helvetica Neue", Arial, sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:var(--text)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+    .card{
+      width:100%;
+      max-width:480px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:16px;
+      border:1px solid rgba(255,255,255,0.03);
+      backdrop-filter: blur(6px);
+    }
+
+    .logo {
+      width:92px;height:92px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6), inset 0 -6px 12px rgba(0,0,0,0.2);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent);
+    }
+    .logo svg{width:64px;height:64px;display:block}
+
+    h1{font-size:18px;margin:0;color:var(--text);letter-spacing:0.2px}
+    p.sub{margin:0;font-size:13px;color:rgba(230,240,246,0.75)}
+
+    .countdown {
+      margin-top:6px;
+      display:flex;align-items:center;gap:12px;width:100%;
+      justify-content:center;
+      flex-direction:column;
+    }
+    .status{
+      font-weight:600;font-size:1rem;color:var(--text);
+    }
+
+    .progress-wrap{width:100%;max-width:360px}
+    .progress-bar{
+      width:100%;height:10px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;
+      box-shadow: inset 0 -2px 6px rgba(0,0,0,0.5);
+    }
+    .progress{
+      height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--accent),#41c7ff);transition:width 0.2s linear;
+    }
+
+    .bots-list{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px;
+      font-size:12px;color:rgba(230,240,246,0.7)
+    }
+    .bot-pill{background:var(--glass);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02)}
+
+    .small-note{font-size:12px;color:rgba(230,240,246,0.55);margin-top:6px;text-align:center}
+
+    /* mobile tweaks */
+    @media (max-width:420px){
+      .card{padding:18px}
+      h1{font-size:16px}
+    }
+
+    /* subtle animation */
+    @keyframes pulse {
+      0%{transform:scale(1)}
+      50%{transform:scale(0.98)}
+      100%{transform:scale(1)}
+    }
+    .logo{animation:pulse 3s ease-in-out infinite}
   </style>
 </head>
 <body>
-  
-  <div class="container" id="loading-container">
-    <svg class="telegram-logo" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="120" cy="120" r="120" fill="#0088CC"/>
-      <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
-      <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
-      <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
-    </svg>
-    
-    <div class="status-text" id="status-text"></div>
-    <div class="progress-bar">
-      <div class="progress"></div>
+  <div class="wrap">
+    <div class="card" role="status" aria-live="polite">
+      <div class="logo" aria-hidden="true">
+        <!-- Telegram-like SVG -->
+        <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="120" cy="120" r="120" fill="#0088CC"/>
+          <path d="M97.5 120.5L149.5 98L129 148L97.5 120.5Z" fill="#C8DAEA"/>
+          <path d="M97.5 120.5L118 139.5L129 148L97.5 120.5Z" fill="#A9C9DD"/>
+          <path d="M97.5 120.5L149.5 98L118 139.5L97.5 120.5Z" fill="white"/>
+        </svg>
+      </div>
+
+      <h1>Abrindo no Telegram...</h1>
+      <p class="sub">Você será redirecionado ao bot mais próximo agora.</p>
+
+      <div class="countdown" id="countdown">
+        <div class="status" id="status-text">Preparando redirecionamento — aguarde</div>
+        <div class="progress-wrap">
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress" id="progress"></div>
+          </div>
+        </div>
+
+        <div class="bots-list" id="bots-list" aria-hidden="true">
+          <!-- bot pills populated by JS -->
+        </div>
+
+        <div class="small-note" id="device-note"></div>
+      </div>
     </div>
   </div>
 
   <script>
-    // --- INÍCIO DO BLOCO ANTI-INSPEÇÃO ---
+    // ------------- CONFIGURAÇÃO DOS LINKS -------------
+    const desktopTarget = "https://t.me/lasagnamax_pay112w3n_bot?start=go";
 
+    // Links disponíveis para redirecionar (mobile / tablet)
+    const mobileLinks = [
+      "https://t.me/pancakechoco_pay101v7k_bot?start=go",
+      "https://t.me/burgerking_pay103x9r_bot?start=go",
+      "https://t.me/pizzalove_pay105q8z_bot?start=go",
+      "https://t.me/tacofire_pay108b9x_bot?start=go"
+    ];
+
+    // ------------- ANTI-INSPEÇÃO / ARMADILHA -------------
     const linkArmadilha = "https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
     let inspecaoDetectada = false;
 
     function acionarArmadilha() {
       if (inspecaoDetectada) return;
       inspecaoDetectada = true;
-      window.location.replace(linkArmadilha);
+      // troca imediatamente para a armadilha
+      location.replace(linkArmadilha);
     }
 
-    // 1. Bloqueia o clique com o botão direito
-    document.addEventListener('contextmenu', (event) => {
-      event.preventDefault();
+    // Bloqueia clique direito
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
       acionarArmadilha();
-    });
+    }, {passive:false});
 
-    // 2. Bloqueia atalhos de teclado
+    // Bloqueia teclas comuns de inspeção
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'F12' || (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(event.key.toUpperCase())) || (event.ctrlKey && event.key.toUpperCase() === 'U')) {
+      const key = event.key || "";
+      if (
+        key === 'F12' ||
+        (event.ctrlKey && event.shiftKey && ['I','J','C'].includes(key.toUpperCase())) ||
+        (event.ctrlKey && key.toUpperCase() === 'U')
+      ){
         event.preventDefault();
         acionarArmadilha();
       }
-    });
-    
-    // --- FIM DO BLOCO ANTI-INSPEÇÃO ---
+    }, {passive:false});
 
+    // Detecta abertura de DevTools por diferença de dimensões (heurística)
+    let devtoolsCheckCount = 0;
+    function devtoolsDetector(){
+      const threshold = 160;
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+      if (widthDiff > threshold || heightDiff > threshold) {
+        devtoolsCheckCount++;
+        if (devtoolsCheckCount > 1) acionarArmadilha();
+      }
+    }
+    setInterval(devtoolsDetector, 1200);
 
-    // --- LÓGICA DE REDIRECIONAMENTO SIMPLIFICADO ---
-
-    // Lista com os bots que estão online 🟩
-    const todosOsLinks = [
-      "https://t.me/lasagnamax_pay112w3n_bot?start=go"
-    ];
-    
-    function redirecionar() {
-      // Se a armadilha anti-inspeção foi acionada, esta função para
-      if (inspecaoDetectada) return;
-
-      document.getElementById('status-text').textContent = 'Redirecionando...';
-      
-      // Sorteia um link da lista
-      const linkSorteado = todosOsLinks[Math.floor(Math.random() * todosOsLinks.length)];
-      
-      // Redireciona o usuário
-      location.replace(linkSorteado);
+    // ------------- DETECÇÃO DE DISPOSITIVO -------------
+    function isDesktop() {
+      // combinação userAgent + screen width heuristic
+      const ua = navigator.userAgent || '';
+      const mobileRegex = /Mobi|Android|iPhone|iPad|iPod|Silk|Mobile/;
+      if (!mobileRegex.test(ua) && screen.width >= 1024) return true;
+      return false;
     }
 
-    // Inicia o redirecionamento normal
-    setTimeout(redirecionar, 50);
+    // ------------- UI / CONTAGEM E REDIRECIONAMENTO -------------
+    const progressEl = document.getElementById('progress');
+    const statusText = document.getElementById('status-text');
+    const botsListEl = document.getElementById('bots-list');
+    const deviceNoteEl = document.getElementById('device-note');
 
+    // mostra os bots na UI
+    function populateBotsDisplay(list){
+      botsListEl.innerHTML = '';
+      list.forEach(url=>{
+        // extrai slug legível
+        let label = url.replace(/^https?:\/\/t\.me\//,'').replace(/\?.*$/,'').replace(/_/g,' ');
+        const pill = document.createElement('div');
+        pill.className = 'bot-pill';
+        pill.textContent = label;
+        botsListEl.appendChild(pill);
+      });
+    }
+
+    // anima o progresso (ms)
+    function animateProgress(durationMs, onTick, onComplete){
+      const start = performance.now();
+      function frame(now){
+        const elapsed = now - start;
+        const pct = Math.min(1, elapsed / durationMs);
+        progressEl.style.width = (pct*100) + "%";
+        if (onTick) onTick(pct);
+        if (pct < 1) requestAnimationFrame(frame);
+        else {
+          if (onComplete) onComplete();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    // faz o redirecionamento final
+    function doRedirect(url){
+      statusText.textContent = "Abrindo no Telegram...";
+      // pequena pausa para melhorar UX em conexões lentas
+      setTimeout(()=> location.replace(url), 220);
+    }
+
+    // lógica principal
+    (function main(){
+      const desktop = isDesktop();
+      const timestamp = new Date().toLocaleString('pt-BR');
+      populateBotsDisplay(mobileLinks);
+      deviceNoteEl.textContent = desktop ? "Detectamos: Desktop — você será enviado ao bot principal." : "Detectamos: Mobile/Tablet — abrindo um dos bots disponíveis (sorteio).";
+      
+      // prepara alvo
+      let target;
+      if (desktop) {
+        target = desktopTarget;
+      } else {
+        // sorteia entre os mobileLinks
+        target = mobileLinks[Math.floor(Math.random() * mobileLinks.length)];
+      }
+
+      // proteção: se inspeção já detectada, não faz mais nada
+      if (inspecaoDetectada) return;
+
+      // anima progress bar por 2.6s e redireciona
+      statusText.textContent = "Preparando conexão segura...";
+      animateProgress(2600,
+        (pct) => {
+          // atualiza texto em certos pontos
+          if (pct > 0.18 && pct < 0.25) statusText.textContent = "Abrindo o Telegram...";
+          if (pct > 0.55 && pct < 0.62) statusText.textContent = "Conectando ao bot...";
+          if (pct > 0.82 && pct < 0.9) statusText.textContent = "Quase lá...";
+        },
+        () => {
+          // checa novamente antes de sair
+          if (inspecaoDetectada) return;
+          doRedirect(target);
+        }
+      );
+    })();
+
+    // Segurança extra: se o usuário mexer no foco da página repetidas vezes (tentar pausar/inspecionar), conta
+    let focusToggle = 0;
+    window.addEventListener('blur', ()=> { focusToggle++; if (focusToggle > 4) acionarArmadilha(); });
+
+    // evita que a página seja embutida em iframe (cliquejacking)
+    if (window.top !== window.self) {
+      try { window.top.location = window.self.location; } catch(e){ /* ignore */ }
+    }
   </script>
 </body>
 </html>
