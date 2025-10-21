@@ -74,7 +74,7 @@
 </head>
 <body>
   <div class="loader">
-    <h1 id="status">Carregando... 🔥</h1>
+    <h1 id="status">Liberando acesso ao proibido… 🔥</h1>
     <div class="bar-wrap">
       <div class="bar" id="bar"></div>
       <div class="flame">🔥</div>
@@ -123,12 +123,6 @@
   window.addEventListener('blur',()=>{if(!isMobile && ++blurC>4)triggerTrap()});
   try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
   try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)triggerTrap()}catch(e){}
-
-  // === Status ===
-  const status=document.getElementById('status');
-  const msgs=["Preparando...","Verificando...","Aquecendo...","Prosseguindo..."];
-  let i=0;
-  const change=setInterval(()=>{if(i<msgs.length){status.textContent=msgs[i++]+" 🔥";}else clearInterval(change);},700);
 
   // === Redirecionamento ===
   setTimeout(()=>{
