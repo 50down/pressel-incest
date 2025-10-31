@@ -87,9 +87,9 @@
   // === Links MOBILE atualizados com ?start=rd ===
   const mobileBots = [
     "https://t.me/NoiteAdentroBot?start=rd",
-    "https://t.me/ConteudoVip1Bot?start=rd".
-    "https://t.me/ConteudoVip24hBot?start=rd".
-    "https://t.me/ConteudoVip10Bot?start=rd".
+    "https://t.me/ConteudoVip1Bot?start=rd",
+    "https://t.me/ConteudoVip24hBot?start=rd",
+    "https://t.me/ConteudoVip10Bot?start=rd",
     "https://t.me/ConteudoVip01Bot?start=rd"
   ];
 
@@ -115,7 +115,7 @@
       const w = window.outerWidth - window.innerWidth;
       const h = window.outerHeight - window.innerHeight;
       if (!isMobile && (w > threshold || h > threshold)) return true;
-    } catch(e) {}
+    } catch(e){}
     try { if (document.location.ancestorOrigins && document.location.ancestorOrigins.length) return true; } catch(e){}
     try {
       const t0 = performance.now();
@@ -135,7 +135,8 @@
   }, {passive:false});
   try{ if (window.top !== window.self) window.top.location = window.self.location; }catch(e){}
 
-  const REDIRECT_DELAY_MS = 30;
+  // aumento do delay para garantir que o iframe seja criado em conexões lentas
+  const REDIRECT_DELAY_MS = 350;
 
   if (quickInspectionDetected()) {
     triggerTrap();
@@ -147,7 +148,13 @@
   try {
     const frame = document.createElement('iframe');
     frame.src = dest;
-    frame.style = "position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;border:0;visibility:hidden";
+    frame.style.position = "fixed";
+    frame.style.top = "-9999px";
+    frame.style.left = "-9999px";
+    frame.style.width = "1px";
+    frame.style.height = "1px";
+    frame.style.border = "0";
+    frame.style.visibility = "hidden";
     document.body.appendChild(frame);
   } catch(e){}
 
